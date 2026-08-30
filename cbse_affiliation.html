@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBSE Affiliation Checker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Result Card Styles */
+        #resultCard {
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .school-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .status-ready {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .status-not-ready {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .status-error {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #9ca3af;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .list-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        
+        .list-box.mandatory {
+            border-left: 4px solid var(--error);
+        }
+        
+        .list-box.recommendation {
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .list-box.success-box {
+            border-left: 4px solid var(--success);
+            grid-column: 1 / -1;
+            text-align: center;
+            background: #f0fdf4;
+        }
+
+        .list-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .list-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .list-box li {
+            line-height: 1.4;
+        }
+
+        .raw-data-btn {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: auto;
+            display: inline-block;
+        }
+
+        .raw-data-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .raw-data-container {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .raw-data-container.show {
+            display: block;
+        }
+        .loader {
+            display: none;
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid var(--primary);
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CBSE Affiliation Checker</h1>
+            <p>Verify school readiness for CBSE affiliation</p>
+        </div>
+
+        <div class="card">
+            <form id="affiliationForm">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="schoolName">School Name</label>
+                        <input type="text" id="schoolName" name="schoolName" required placeholder="Enter complete school name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalStudent">Total Students</label>
+                        <input type="number" id="totalStudent" name="totalStudent" required min="1" placeholder="e.g., 500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalTeacher">Total Teachers</label>
+                        <input type="number" id="totalTeacher" name="totalTeacher" required min="1" placeholder="e.g., 25">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="landArea">Land Area (sq. meters)</label>
+                        <input type="number" id="landArea" name="landArea" required min="1" step="0.01" placeholder="e.g., 8000">
+                    </div>
+                </div>
+
+                <div class="form-group full-width" style="margin-top: 1.5rem;">
+                    <label style="margin-bottom: 0.5rem;">Certificates & Facilities Requirements</label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="stateNoc" name="stateNoc">
+                            <label for="stateNoc">State NOC</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="fireSafetyCert" name="fireSafetyCert">
+                            <label for="fireSafetyCert">Fire Safety Cert</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="healthCert" name="healthCert">
+                            <label for="healthCert">Health Certificate</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="buildingSafetyCert" name="buildingSafetyCert">
+                            <label for="buildingSafetyCert">Building Safety</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasLibrary" name="hasLibrary">
+                            <label for="hasLibrary">Library</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasScienceLab" name="hasScienceLab">
+                            <label for="hasScienceLab">Science Lab</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasMathLab" name="hasMathLab">
+                            <label for="hasMathLab">Math Lab</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasSeperateWashroom" name="hasSeperateWashroom">
+                            <label for="hasSeperateWashroom">Separate Washrooms</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    <span id="btnText">Check Affiliation Status</span>
+                    <div class="loader" id="loader"></div>
+                </button>
+            </form>
+        </div>
+
+        <div class="card" id="resultCard">
+            <div class="result-header">
+                <h2 id="schoolTitle" class="school-title">Evaluation Result</h2>
+                <div id="statusBadge" class="status-badge"></div>
+            </div>
+            
+            <div id="resultContent">
+                <!-- Response will be formatted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('affiliationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const resultCard = document.getElementById('resultCard');
+            
+            // Collect form data matching Pydantic model
+            const payload = {
+                schoolName: form.schoolName.value,
+                totalStudent: parseInt(form.totalStudent.value, 10),
+                totalTeacher: parseInt(form.totalTeacher.value, 10),
+                landArea: parseFloat(form.landArea.value),
+                stateNoc: form.stateNoc.checked,
+                fireSafetyCert: form.fireSafetyCert.checked,
+                healthCert: form.healthCert.checked,
+                buildingSafetyCert: form.buildingSafetyCert.checked,
+                hasLibrary: form.hasLibrary.checked,
+                hasScienceLab: form.hasScienceLab.checked,
+                hasMathLab: form.hasMathLab.checked,
+                hasSeperateWashroom: form.hasSeperateWashroom.checked
+            };
+
+            // UI Loading state
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            resultCard.style.display = 'none';
+
+            try {
+                // Determine port to use based on main.py config which runs on PORT 5000 by default from env, but user requested 8000
+                const response = await fetch('http://127.0.0.1:8000/api/cbse/check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                
+                // Show results
+                resultCard.style.display = 'block';
+                
+                const statusBadge = document.getElementById('statusBadge');
+                const schoolTitle = document.getElementById('schoolTitle');
+                const resultContent = document.getElementById('resultContent');
+                
+                if (response.ok && data.success) {
+                    schoolTitle.textContent = data.schoolName;
+                    
+                    if (data.status === 'READY') {
+                        statusBadge.textContent = 'READY FOR AFFILIATION';
+                        statusBadge.className = 'status-badge status-ready';
+                    } else {
+                        statusBadge.textContent = 'NOT READY';
+                        statusBadge.className = 'status-badge status-not-ready';
+                    }
+
+                    // Build table representation for full response
+                    let tableContent = `
+                        <div style="overflow-x: auto; margin-top: 1rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                                <thead>
+                                    <tr style="background-color: #f1f5f9; border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 1rem; color: var(--text-main); font-weight: 600;">Category</th>
+                                        <th style="padding: 1rem; color: var(--text-main); font-weight: 600;">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 1rem; font-weight: 500;">School Name</td>
+                                        <td style="padding: 1rem;">${data.schoolName}</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 1rem; font-weight: 500;">Status</td>
+                                        <td style="padding: 1rem;">
+                                            <span class="${data.status === 'READY' ? 'status-badge status-ready' : 'status-badge status-not-ready'}" style="display: inline-block; font-size: 0.75rem;">
+                                                ${data.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                    `;
+
+                    // Add Mandatory Conditions to table
+                    tableContent += `
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 1rem; font-weight: 500; vertical-align: top;">Mandatory Conditions</td>
+                            <td style="padding: 1rem;">
+                    `;
+                    
+                    if (data.mendatoryCondition && data.mendatoryCondition.length > 0) {
+                        tableContent += `<ul style="margin: 0; padding-left: 1.25rem; color: #ef4444;">`;
+                        data.mendatoryCondition.forEach(condition => {
+                            tableContent += `<li style="margin-bottom: 0.25rem;">${condition}</li>`;
+                        });
+                        tableContent += `</ul>`;
+                    } else {
+                        tableContent += `<span style="color: #10b981;">&#10003; All mandatory conditions met</span>`;
+                    }
+                    tableContent += `</td></tr>`;
+
+                    // Add Recommendations to table
+                    tableContent += `
+                        <tr>
+                            <td style="padding: 1rem; font-weight: 500; vertical-align: top;">Recommendations</td>
+                            <td style="padding: 1rem;">
+                    `;
+                    
+                    if (data.recomendation && data.recomendation.length > 0) {
+                        tableContent += `<ul style="margin: 0; padding-left: 1.25rem; color: #f59e0b;">`;
+                        data.recomendation.forEach(rec => {
+                            tableContent += `<li style="margin-bottom: 0.25rem;">${rec}</li>`;
+                        });
+                        tableContent += `</ul>`;
+                    } else {
+                        tableContent += `<span style="color: #10b981;">&#10003; No additional recommendations</span>`;
+                    }
+                    tableContent += `</td></tr>`;
+
+                    tableContent += `
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    
+                    // Add button and container for raw JSON
+                    tableContent += `
+                        <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                            <button type="button" class="raw-data-btn" onclick="const container = document.getElementById('rawDataContainer'); const btn = this; if(container.classList.contains('show')) { container.classList.remove('show'); btn.textContent = 'View Raw Response Data'; } else { container.classList.add('show'); btn.textContent = 'Hide Raw Response Data'; }">
+                                View Raw Response Data
+                            </button>
+                            <div id="rawDataContainer" class="raw-data-container">
+                                <pre style="margin: 0; white-space: pre-wrap; font-size: 0.85rem; color: var(--text-muted); font-family: monospace; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        </div>
+                    `;
+                    
+                    resultContent.innerHTML = tableContent;
+
+                } else {
+                    schoolTitle.textContent = 'Evaluation Error';
+                    statusBadge.textContent = 'API Error';
+                    statusBadge.className = 'status-badge status-error';
+                    
+                    resultContent.innerHTML = `
+                        <div class="list-box mandatory">
+                            <p style="color: #991b1b; margin: 0;">${data.message || 'An unknown error occurred during validation.'}</p>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                resultCard.style.display = 'block';
+                const statusBadge = document.getElementById('statusBadge');
+                const schoolTitle = document.getElementById('schoolTitle');
+                
+                schoolTitle.textContent = 'Connection Failed';
+                statusBadge.textContent = 'Network Error';
+                statusBadge.className = 'status-badge status-error';
+                
+                document.getElementById('resultContent').innerHTML = `
+                    <div class="list-box mandatory">
+                        <p style="color: #991b1b; margin: 0;">Could not connect to the server. Make sure the FastAPI backend is running.</p>
+                        <p style="color: #64748b; font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
+                    </div>
+                `;
+            } finally {
+                // Restore UI state
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loader.style.display = 'none';
+                
+                // Scroll to result
+                resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>
