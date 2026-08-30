@@ -15,7 +15,7 @@ async def upload_image(
     background_tasks: BackgroundTasks,
     school_id: str = Form(...),
     module: str = Form(...),
-    category: str = Form(...),
+   category: Optional[str] = Form("Other"),
     description: Optional[str] = Form(None),
     file: UploadFile = File(...),
     db: AsyncSession = Depends(get_db)
@@ -29,6 +29,8 @@ async def upload_image(
         "Electricity", "Furniture", "Playground", "Boundary/School Premises", 
         "Road/Access to School", "Surrounding Area", "Other"
     ]
+    if not category or category not in valid_categories:
+        category = "Other"
     if category not in valid_categories:
         raise HTTPException(status_code=400, detail=f"Invalid category. Must be one of {valid_categories}")
 
@@ -58,11 +60,18 @@ async def upload_image(
     # Note: In production this should be truly async via Celery/BackgroundTasks with its own DB Session.
     # We run it synchronously here so the frontend immediately receives the parsed data for review.
     try:
-        analysis_result = await vision_ai.analyze_image(physical_file_path, category, description)
+        # analysis_result = await vision_ai.analyze_image(physical_file_path, category, description)
+        analysis_result = await vision_ai.analyze_image(physical_file_path, description=description)
         
-        # Save raw JSON analysis on image
+        if analysis_result and hasattr(analysis_result, 'image_category'):
+            new_image.category = analysis_result.image_category
+            
+        # Store the JSON dictionary on the model so the frontend receives it
         new_image.analysis_result = analysis_result.model_dump()
         db.add(new_image)
+        await db.commit()
+        # new_image.analysis_result = analysis_result.model_dump()
+        # db.add(new_image)
         
         # Save individual problems discovered by AI (only if quality is sufficient)
         if analysis_result.image_quality.analysis_recommended:

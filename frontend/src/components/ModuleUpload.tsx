@@ -35,6 +35,7 @@ interface UploadData {
     status: 'pending' | 'uploading' | 'success' | 'error';
     errorMessage?: string;
     analysis?: AnalysisResult;
+    imageId?: string;
 }
 
 interface ModuleUploadProps {
@@ -104,15 +105,13 @@ export const ModuleUpload: React.FC<ModuleUploadProps> = ({ activeSchoolId, modu
                 return newUploads;
             });
 
-            const formData = new FormData();
-            formData.append('file', uploads[i].file);
-            formData.append('school_id', activeSchoolId);
-            formData.append('module', moduleName);
-            // Defaulting category to module name for simplicity since they are 1:1 here
-            formData.append('category', moduleName); 
-            if (uploads[i].description) {
-                formData.append('description', uploads[i].description);
-            }
+           const formData = new FormData();
+formData.append('file', uploads[i].file);
+formData.append('school_id', activeSchoolId);
+formData.append('module', moduleName);
+if (uploads[i].description) {
+    formData.append('description', uploads[i].description);
+}
 
             try {
                 const response = await axios.post('http://localhost:8000/api/v1/images/upload', formData, {
@@ -131,6 +130,7 @@ export const ModuleUpload: React.FC<ModuleUploadProps> = ({ activeSchoolId, modu
                     const newUploads = [...prev];
                     newUploads[i].status = 'success';
                     newUploads[i].analysis = response.data.analysis;
+                    newUploads[i].imageId = response.data.image_id;
                     return newUploads;
                 });
             } catch (error: any) {
@@ -233,7 +233,11 @@ export const ModuleUpload: React.FC<ModuleUploadProps> = ({ activeSchoolId, modu
                                             </ul>
                                         )}
                                         
-                                        <ManualProblemFlagging schoolId={activeSchoolId} imageId="temporary-frontend-id" imageUrl={upload.preview} />
+                                       <ManualProblemFlagging 
+                                            schoolId={activeSchoolId} 
+                                            imageId={upload.imageId || ''} 
+                                            imageUrl={upload.preview} 
+                                                />
                                     </div>
                                 )}
                             </div>
