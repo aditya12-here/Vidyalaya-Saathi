@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SchoolDataForm.css';
 
 interface SchoolDataFormProps {
     onSchoolCreated: (schoolId: string) => void;
+    prefillSchoolId?: string | null;
 }
 
-export const SchoolDataForm: React.FC<SchoolDataFormProps> = ({ onSchoolCreated }) => {
-    const [schoolId, setSchoolId] = useState('');
+export const SchoolDataForm: React.FC<SchoolDataFormProps> = ({ onSchoolCreated, prefillSchoolId }) => {
+    const [schoolId, setSchoolId] = useState(prefillSchoolId || '');
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [state, setState] = useState('');
@@ -15,6 +16,12 @@ export const SchoolDataForm: React.FC<SchoolDataFormProps> = ({ onSchoolCreated 
     const [schoolType, setSchoolType] = useState('Primary');
     const [enrollment, setEnrollment] = useState<number | ''>('');
     const [teachers, setTeachers] = useState<number | ''>('');
+
+    useEffect(() => {
+        if (prefillSchoolId) {
+            setSchoolId(prefillSchoolId);
+        }
+    }, [prefillSchoolId]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

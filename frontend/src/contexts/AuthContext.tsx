@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
 
-type Role = 'DISTRICT_OFFICER' | 'SCHOOL_MANAGEMENT' | 'SURVEYOR' | 'COMMUNITY';
+export type Role = 'DISTRICT_OFFICER' | 'SCHOOL_MANAGEMENT' | 'SURVEYOR' | 'COMMUNITY';
 
-interface User {
+export interface User {
     user_id: string;
     email: string;
     role: Role;

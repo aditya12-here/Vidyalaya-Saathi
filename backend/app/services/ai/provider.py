@@ -200,6 +200,9 @@ def normalize_ai_response(data: dict) -> dict:
 class VisionAIProvider:
 
     def __init__(self):
+        from dotenv import load_dotenv
+        load_dotenv()
+
         # Local Ollama config switch
         self.use_ollama = os.environ.get("USE_OLLAMA", "false").lower() in ("true", "1", "yes")
         self.ollama_host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
@@ -207,13 +210,10 @@ class VisionAIProvider:
 
         # NVIDIA API Setup
         self.base_url = "https://integrate.api.nvidia.com/v1"
-        api_key = os.environ.get("API_KEY")
+        self.api_key = os.environ.get("API_KEY")
 
-        if not self.use_ollama and not api_key:
-            raise ValueError("API_KEY environment variable is not configured.")
-
-        if api_key:
-            self.client = AsyncOpenAI(api_key=api_key, base_url=self.base_url)
+        if self.api_key:
+            self.client = AsyncOpenAI(api_key=self.api_key, base_url=self.base_url)
         else:
             self.client = None
 
@@ -319,7 +319,11 @@ CRITICAL: Return strictly a JSON object matching this schema format:
                 raw_content = await self._analyze_with_ollama(base64_image, prompt)
             else:
                 if not self.client:
-                    raise RuntimeError("NVIDIA API client is not initialized.")
+                    api_key = os.environ.get("API_KEY")
+                    if api_key:
+                        self.client = AsyncOpenAI(api_key=api_key, base_url=self.base_url)
+                    else:
+                        raise RuntimeError("Vision AI error: API_KEY environment variable is not configured. Please add API_KEY to your .env file or environment.")
                 response = await self.client.chat.completions.create(
                     model=self.model,
                     messages=[{

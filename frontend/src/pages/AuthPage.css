@@ -2,112 +2,176 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f5f7fa;
+    min-height: 100vh;
+    background-color: #f1f5f9;
+    padding: 20px;
 }
 
 .auth-card {
     background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 36px 32px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
+    border: 1px solid #e2e8f0;
 }
 
 .auth-card h2 {
-    margin-top: 0;
+    margin: 0 0 6px 0;
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px;
+    color: #0f172a;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.875rem;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
 }
 
 .auth-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
 }
 
 .auth-field {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .auth-field label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #34495e;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
 }
 
-.auth-field input {
-    padding: 10px;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    font-size: 1rem;
+.auth-field input,
+.auth-field select {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.auth-field input:focus {
-    border-color: #3498db;
+.auth-field input:focus,
+.auth-field select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     outline: none;
 }
 
-.auth-error {
-    background-color: #ffeaa7;
-    color: #d35400;
-    padding: 10px;
+.auth-input-hint {
+    font-size: 0.78rem;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 6px 10px;
     border-radius: 4px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+.auth-error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
     text-align: center;
 }
 
 .auth-btn {
-    background-color: #2980b9;
+    background-color: #2563eb;
     color: white;
     border: none;
     padding: 12px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .auth-btn:hover:not(:disabled) {
-    background-color: #3498db;
+    background-color: #1d4ed8;
 }
 
 .auth-btn:disabled {
-    background-color: #95a5a6;
+    background-color: #94a3b8;
     cursor: not-allowed;
 }
 
 .auth-hint {
     font-size: 0.8rem;
-    color: #7f8c8d;
+    color: #64748b;
     margin: 0;
     line-height: 1.4;
+    background: #f8fafc;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
 }
 
 .auth-toggle {
     margin-top: 20px;
     text-align: center;
-    font-size: 0.9rem;
-    color: #7f8c8d;
+    font-size: 0.875rem;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
 }
 
 .auth-toggle-btn {
     background: none;
     border: none;
-    color: #2980b9;
-    font-weight: bold;
+    color: #2563eb;
+    font-weight: 600;
     cursor: pointer;
     padding: 0;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
 }
 
 .auth-toggle-btn:hover {
     text-decoration: underline;
+}
+
+.auth-demo-box {
+    margin-top: 16px;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.demo-fill-btn {
+    background: #ffffff;
+    color: #2563eb;
+    border: 1px solid #93c5fd;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.demo-fill-btn:hover {
+    background: #eff6ff;
 }

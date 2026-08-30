@@ -1,0 +1,177 @@
+.invite-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.invite-modal-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 520px;
+    padding: 28px;
+    animation: modal-fade 0.2s ease-out;
+}
+
+@keyframes modal-fade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.invite-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.invite-modal-header h3 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.invite-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.invite-close-btn:hover {
+    color: #0f172a;
+    background: #f1f5f9;
+}
+
+.invite-subtitle {
+    margin: 0 0 20px 0;
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.invite-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.invite-field span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.invite-field input,
+.invite-field select {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.invite-field input:focus,
+.invite-field select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.invite-alert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.invite-error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.invite-success {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.invite-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.invite-cancel-btn {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.invite-cancel-btn:hover {
+    background: #e2e8f0;
+}
+
+.invite-submit-btn {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.invite-submit-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.invite-submit-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}

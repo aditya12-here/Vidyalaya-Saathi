@@ -21,8 +21,7 @@ class UserResponse(BaseModel):
     is_global: bool
     school_id: Optional[str]
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class InviteRequest(BaseModel):
     email: EmailStr
@@ -34,7 +33,7 @@ class CommunitySignupRequest(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=8)
     school_id: str
-    community_id_number: str
+    community_id_number: Optional[str] = None
 
 # 1. Login endpoint (for everyone)
 @router.post("/token")
@@ -53,7 +52,15 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": str(user.user_id), "role": user.role.value}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer", "role": user.role.value, "school_id": user.school_id}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user_id": str(user.user_id),
+        "email": user.email,
+        "role": user.role.value,
+        "is_global": user.is_global,
+        "school_id": user.school_id
+    }
 
 # 2. Get current user profile
 @router.get("/me", response_model=UserResponse)

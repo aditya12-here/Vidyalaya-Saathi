@@ -1,42 +1,195 @@
-/* frontend/src/App.css
-   FULL REPLACEMENT FILE — delete whatever is currently in this file and
-   paste this entire file in its place (do not append). Includes the
-   original base rules plus everything needed for the new landing intro,
-   "how it works" cards, and the guided dashboard flow strip/sections. */
-
 * {
   box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.App-header p {
-  margin: 4px 0 0 0;
-  color: #adb5bd;
-  font-size: 1.1rem;
-}
-
 body {
   margin: 0;
-  background-color: #f8f9fa;
+  background-color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1e293b;
 }
 
+/* ========================================================================= */
+/* Global App Header & Navigation                                            */
+/* ========================================================================= */
+
+.App-header {
+  background: #0f172a;
+  color: white;
+  padding: 16px 24px 0 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.brand-section h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.brand-section p {
+  margin: 2px 0 0 0;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.user-profile-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #1e293b;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.role-admin {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.role-management {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.role-surveyor {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.role-community {
+  background: #06b6d4;
+  color: #ffffff;
+}
+
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  border-color: #ef4444;
+}
+
+/* Header Navigation Bar */
+.header-nav-bar {
+  display: flex;
+  padding-top: 10px;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-tab-btn:hover {
+  color: #f8fafc;
+}
+
+.nav-tab-btn.active {
+  color: #38bdf8;
+  border-bottom: 3px solid #38bdf8;
+}
+
+.nav-tab-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-tab-action:hover {
+  background: #1d4ed8;
+}
+
+/* App Main Container */
 .App-main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px 60px 20px;
 }
 
-/* ---------- Landing page ---------- */
+/* ========================================================================= */
+/* Landing / Directory View (When no school active)                           */
+/* ========================================================================= */
 
 .landing-container {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -44,170 +197,304 @@ body {
 }
 
 .intro-panel {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
   padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .intro-panel h2 {
   margin-top: 0;
+  color: #0f172a;
+  font-size: 1.35rem;
 }
 
 .intro-text {
-  color: #555;
+  color: #475569;
   font-size: 0.95rem;
   line-height: 1.6;
-  max-width: 720px;
+  max-width: 760px;
 }
 
 .how-it-works-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 14px;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .how-it-works-card {
-  background: #f8f9fa;
-  border: 1px solid #eee;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 14px;
 }
 
 .hiw-icon {
-  color: #1565c0;
+  color: #2563eb;
   font-size: 1.3rem;
   margin-bottom: 8px;
 }
 
 .how-it-works-card h4 {
   margin: 0 0 6px 0;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  color: #0f172a;
 }
 
 .how-it-works-card p {
   margin: 0;
-  font-size: 0.8rem;
-  color: #666;
+  font-size: 0.78rem;
+  color: #64748b;
   line-height: 1.4;
 }
 
+/* Existing Schools Directory */
 .existing-schools-panel {
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.existing-schools-panel h3 {
-  margin-top: 0;
+.panel-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.panel-header-row h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.2rem;
+}
+
+.refresh-schools-btn {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.refresh-schools-btn:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.existing-schools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.school-directory-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.2s;
+}
+
+.school-directory-card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+}
+
+.school-card-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.school-card-title strong {
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.school-card-id {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-family: monospace;
+}
+
+.school-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.sc-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.problems-tag {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.prioritized-tag {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.budgeted-tag {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.school-card-location {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.school-select-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 0.2s;
+}
+
+.school-select-btn:hover {
+  background: #1d4ed8;
 }
 
 .landing-hint {
-  color: #6c757d;
+  color: #64748b;
   font-size: 0.9rem;
 }
 
 .landing-error {
-  color: #c62828;
+  color: #dc2626;
   font-size: 0.9rem;
-}
-
-.existing-schools-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.existing-school-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  background-color: #fff;
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  padding: 10px 14px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.existing-school-btn:hover {
-  background-color: #f1f3f5;
-  border-color: #6c757d;
-}
-
-.existing-school-meta {
-  font-size: 0.8rem;
-  color: #6c757d;
-  font-weight: normal;
-}
-
-.refresh-schools-btn {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.refresh-schools-btn:hover {
-  background-color: #5a6268;
 }
 
 .landing-divider {
   text-align: center;
-  color: #adb5bd;
+  color: #94a3b8;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
 }
 
-/* ---------- Dashboard (school active) ---------- */
+/* ========================================================================= */
+/* Active School Dashboard                                                   */
+/* ========================================================================= */
 
 .dashboard-container {
   padding-bottom: 20px;
 }
 
 .dashboard-notice {
-  background-color: #e9ecef;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 14px 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  border: 1px solid #ced4da;
+  border: 1px solid #e2e8f0;
   flex-wrap: wrap;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.active-school-meta {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.school-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.school-code-badge {
+  font-size: 1.1rem;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 2px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.school-lock-pill {
+  font-size: 0.75rem;
+  background: #e2e8f0;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
 }
 
 .switch-school-btn {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
 }
 
 .switch-school-btn:hover {
-  background-color: #5a6268;
+  background-color: #e2e8f0;
 }
 
-/* Progress / flow strip */
-
+/* Guided flow strip */
 .flow-strip {
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 14px 18px;
   margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
 .flow-strip-header {
@@ -216,40 +503,41 @@ body {
   align-items: center;
   font-size: 0.78rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #888;
-  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 8px;
+  font-weight: 600;
 }
 
 .flow-refresh-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: none;
-  border: 1px solid #ddd;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 0.75rem;
   cursor: pointer;
-  color: #555;
+  color: #475569;
   text-transform: none;
-  letter-spacing: normal;
+  font-weight: 500;
 }
 
-.flow-refresh-btn .spin {
+.flow-refresh-btn:hover {
+  background: #f1f5f9;
+}
+
+.flow-refresh-btn .spin,
+.refresh-schools-btn .spin {
   animation: flow-spin 1s linear infinite;
 }
 
 @keyframes flow-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .flow-steps {
@@ -263,78 +551,119 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #f8f9fa;
-  border: 1px solid #eee;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 999px;
   padding: 6px 14px;
   cursor: pointer;
   font-size: 0.82rem;
-  color: #333;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.2s;
 }
 
 .flow-step:hover {
-  background: #eef3fb;
-  border-color: #1565c0;
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
 }
 
 .flow-done {
-  color: #2e7d32;
+  color: #16a34a;
   flex-shrink: 0;
 }
 
 .flow-pending {
-  color: #bbb;
+  color: #94a3b8;
   flex-shrink: 0;
 }
 
 .flow-neutral {
-  color: #1565c0;
+  color: #2563eb;
   flex-shrink: 0;
 }
 
 .flow-arrow {
-  color: #ccc;
+  color: #cbd5e1;
   flex-shrink: 0;
 }
 
-/* Numbered sections */
-
+/* Numbered Flow Sections */
 .flow-section {
-  margin-bottom: 28px;
+  margin-bottom: 32px;
   scroll-margin-top: 20px;
 }
 
 .flow-section-title {
   margin: 0 0 4px 0;
+  color: #0f172a;
+  font-size: 1.2rem;
 }
 
 .flow-section-desc {
-  margin: 0 0 14px 0;
-  color: #666;
-  font-size: 0.85rem;
-  max-width: 720px;
-}
-
-.flow-section-desc code {
-  background: #eee;
-  padding: 1px 5px;
-  border-radius: 3px;
-  font-size: 0.8em;
+  margin: 0 0 16px 0;
+  color: #64748b;
+  font-size: 0.875rem;
+  max-width: 760px;
+  line-height: 1.5;
 }
 
 .placeholder-modules {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
 .module-card {
-  flex: 1 1 220px;
-  background-color: #e9ecef;
-  border: 2px dashed #adb5bd;
-  border-radius: 8px;
-  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.module-card h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.module-card .coming-soon {
+  margin: 0 0 14px 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.cbse-wrapper {
+  padding: 10px 0;
+}
+
+.empty-state-notice {
   text-align: center;
-  color: #6c757d;
-  font-weight: 500;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+/* Auth loading spinner */
+.auth-loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+  color: #64748b;
+}
+
+.auth-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: flow-spin 0.8s linear infinite;
 }
