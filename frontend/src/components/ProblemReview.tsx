@@ -139,23 +139,29 @@ export const ManualProblemFlagging: React.FC<{schoolId: string, imageId: string,
         setCoordinates({x, y});
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+        const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            // Check if imageId is a valid UUID format before sending
+            const isValidUuid = imageId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(imageId);
+
             await axios.post(`http://localhost:8000/api/v1/problems/school/${schoolId}/manual`, {
-                image_id: imageId,
+                image_id: isValidUuid ? imageId : null,
                 title,
                 category,
                 description,
                 human_priority: priority,
                 image_coordinates: coordinates
             });
-            alert("Manual problem flagged successfully");
+            alert("Manual problem flagged successfully!");
             setIsOpen(false);
-            // Reset form
-            setTitle(''); setDescription(''); setCoordinates(null);
-        } catch(error) {
+            // Reset form fields
+            setTitle(''); 
+            setDescription(''); 
+            setCoordinates(null);
+        } catch(error: any) {
             console.error("Failed to flag problem", error);
+            alert("Failed to save manual flag: " + (error.response?.data?.detail?.[0]?.msg || error.message));
         }
     };
 
