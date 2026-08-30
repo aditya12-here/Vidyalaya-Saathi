@@ -1,0 +1,439 @@
+/* frontend/src/components/SchoolExplorer.css
+   FULL REPLACEMENT FILE — delete whatever is currently in this file and
+   paste this entire file in its place. (Previous instructions had you
+   append pieces in two steps; that's an easy step to get wrong — paste
+   into the wrong file, wrong position, etc. — which is the most likely
+   cause of the "everything scattered, no styling" look. This single file
+   is everything the component needs, nothing more.)
+
+   Fixes included in this version vs. before:
+   - box-sizing: border-box applied within the component, so padding/
+     borders no longer blow out widths and cause overlap.
+   - flex-wrap added on rows that previously assumed unlimited width
+     (badges + title + score all fit on one line) so they wrap instead of
+     overlapping/scattering on narrower screens.
+   - pc-field-grid now auto-fits column count to available width instead
+     of a fixed 2 columns, so fields don't get squeezed or overflow.
+   - .school-explorer now has a proper bottom margin so it doesn't butt
+     up against the bottom of the page. */
+
+.school-explorer,
+.school-explorer * {
+  box-sizing: border-box;
+}
+
+.school-explorer {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 24px 0 48px 0;
+  /* top and BOTTOM margin, so there's breathing room after this section */
+}
+
+.explorer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.explorer-header h3 {
+  margin: 0 0 4px 0;
+}
+
+.explorer-subtitle {
+  margin: 0;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.explorer-toggle-btn {
+  background: #37474f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.explorer-body {
+  margin-top: 16px;
+  padding-bottom: 4px;
+}
+
+.explorer-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.explorer-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: #1565c0;
+}
+
+.explorer-refresh-btn .spin {
+  animation: explorer-spin 1s linear infinite;
+}
+
+@keyframes explorer-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.explorer-error {
+  background: #ffebee;
+  color: #c62828;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.explorer-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 14px;
+  padding-bottom: 2px;
+}
+
+.explorer-tab {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.explorer-tab.active {
+  color: #1565c0;
+  border-bottom: 2px solid #1565c0;
+  font-weight: 600;
+}
+
+.explorer-tab-content {
+  min-height: 60px;
+  margin-bottom: 8px;
+}
+
+.explorer-empty {
+  color: #888;
+  font-size: 0.85rem;
+  padding: 10px 0;
+}
+
+.explorer-subsection-title {
+  margin: 18px 0 8px 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.explorer-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+
+.explorer-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.78rem;
+}
+
+.explorer-table th,
+.explorer-table td {
+  border: 1px solid #eee;
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+
+.explorer-table th {
+  background: #fafafa;
+  font-weight: 600;
+  color: #555;
+  position: sticky;
+  top: 0;
+}
+
+.explorer-table tr:nth-child(even) {
+  background: #fbfbfb;
+}
+
+.explorer-null {
+  color: #bbb;
+  font-style: italic;
+}
+
+.explorer-json {
+  margin: 0;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+  max-width: 240px;
+  word-break: break-word;
+}
+
+/* ---------- Problem cards (Problems tab) ---------- */
+
+.problem-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.problem-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pc-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.pc-summary:hover {
+  background: #fafafa;
+}
+
+.pc-tier-badge {
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pc-safety-icon {
+  color: #c62828;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pc-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+  min-width: 160px;
+}
+
+.pc-main strong {
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-meta {
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-status-badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #eceff1;
+  color: #455a64;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pc-status-badge.status-confirmed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.pc-status-badge.status-pending-review {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.pc-status-badge.status-rejected {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.pc-score {
+  font-weight: 700;
+  color: #333;
+  min-width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pc-details {
+  padding: 16px 18px 20px 18px;
+  background: #fbfbfb;
+  border-top: 1px solid #eee;
+}
+
+.pc-section {
+  margin-bottom: 18px;
+}
+
+.pc-section:last-of-type {
+  margin-bottom: 10px;
+}
+
+.pc-section h5 {
+  margin: 0 0 8px 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #777;
+}
+
+.pc-description {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.pc-field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.pc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.pc-field-label {
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.pc-field-value {
+  color: #333;
+  word-break: break-word;
+}
+
+.pc-field-note {
+  font-size: 0.78rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.pc-subscores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.pc-subscore-item {
+  display: grid;
+  grid-template-columns: 90px 1fr 42px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+
+.pc-subscore-label {
+  text-transform: capitalize;
+  color: #555;
+}
+
+.pc-subscore-bar-track {
+  background: #e0e0e0;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.pc-subscore-bar-fill {
+  background: #1565c0;
+  height: 100%;
+}
+
+.pc-subscore-value {
+  text-align: right;
+  color: #555;
+}
+
+.pc-context-rules {
+  margin: 10px 0 0 0;
+  padding: 10px 12px 10px 26px;
+  font-size: 0.8rem;
+  color: #7a5c00;
+  background: #fff8e1;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+.pc-raw-toggle {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  color: #555;
+  margin-top: 4px;
+}
+
+.pc-raw-toggle:hover {
+  background: #f0f0f0;
+}
+
+.pc-raw-block {
+  margin-top: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 10px;
+  background: #fff;
+}

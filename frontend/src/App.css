@@ -1,65 +1,88 @@
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  margin-bottom: 20px;
-}
+/* --- ADDITIONS to frontend/src/App.css ---
+   Append everything below to the END of your existing App.css.
+   Do not replace the whole file — these are new rules only, for the
+   "load an existing school" landing panel added to App.tsx. Nothing above
+   this point needs to change. */
 
-.App-header p {
-  margin: 0;
-  color: #adb5bd;
-  font-size: 1.1rem;
-}
-
-body {
-  margin: 0;
-  background-color: #f8f9fa;
-}
-
-.App-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.dashboard-notice {
-  background-color: #e9ecef;
-  padding: 15px;
-  border-radius: 8px;
+.landing-container {
+  max-width: 640px;
+  margin: 40px auto;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  border: 1px solid #ced4da;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.switch-school-btn {
+.existing-schools-panel {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.existing-schools-panel h3 {
+  margin-top: 0;
+}
+
+.landing-hint {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.landing-error {
+  color: #c62828;
+  font-size: 0.9rem;
+}
+
+.existing-schools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.existing-school-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.existing-school-btn:hover {
+  background-color: #f1f3f5;
+  border-color: #6c757d;
+}
+
+.existing-school-meta {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: normal;
+}
+
+.refresh-schools-btn {
   background-color: #6c757d;
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.85rem;
 }
 
-.switch-school-btn:hover {
+.refresh-schools-btn:hover {
   background-color: #5a6268;
 }
 
-.placeholder-modules {
-  display: flex;
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.module-card {
-  flex: 1;
-  background-color: #e9ecef;
-  border: 2px dashed #adb5bd;
-  border-radius: 8px;
-  padding: 30px;
+.landing-divider {
   text-align: center;
-  color: #6c757d;
-  font-weight: 500;
+  color: #adb5bd;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
 }
