@@ -19,11 +19,13 @@ from app.api.school_data import router as school_data_router
 from app.api.prioritization import router as prioritization_router
 from app.api.budget import router as budget_router
 from app.api.explorer import router as explorer_router  # >>> ADDED
+from app.api.auth import router as auth_router            # >>> ADDED
 from app.database import engine
 from app.models.image import Base
 from app.models.school_data import Base as SchoolDataBase
 from app.models import prioritization as _prioritization_models  # noqa: F401
 from app.models import budget as _budget_models  # noqa: F401
+from app.models import user as _user_models # noqa: F401
 
 app = FastAPI(title="Vidyalaya Saathi - Diagnostic Engine API")
 
@@ -51,6 +53,7 @@ async def startup():
         await conn.run_sync(Base.metadata.create_all)
         await conn.run_sync(SchoolDataBase.metadata.create_all)
 
+app.include_router(auth_router, prefix="/api/v1")
 app.include_router(images_router, prefix="/api/v1")
 app.include_router(problems_router, prefix="/api/v1")
 app.include_router(school_data_router, prefix="/api/v1")
