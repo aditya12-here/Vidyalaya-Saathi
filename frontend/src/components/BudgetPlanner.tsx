@@ -49,7 +49,9 @@ const REASON_LABEL: Record<string, string> = {
     NOT_SELECTED: 'Not funded this round',
 };
 
-export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ schoolId }) => {
+export const BudgetPlanner: React.FC<BudgetPlannerProps & { refreshTrigger?: number }> = ({ schoolId, refreshTrigger }) => {
+    // Default the budget input field to the budget value from the backend, if possible,
+    // otherwise fallback to a default value.
     const [budget, setBudget] = useState<string>('200000');
     const [plan, setPlan] = useState<BudgetPlanResponse | null>(null);
     const [loading, setLoading] = useState(false);
@@ -60,6 +62,9 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ schoolId }) => {
             const res = await axios.get(`${API_BASE}/budget/school/${schoolId}/plan/latest`);
             if (res.data.allocations) {
                 setPlan(res.data);
+                if (res.data.budget_ceiling) {
+                    setBudget(res.data.budget_ceiling.toString());
+                }
             }
         } catch (err) {
             console.error('Failed to fetch latest budget plan', err);
@@ -69,7 +74,7 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ schoolId }) => {
     useEffect(() => {
         if (schoolId) fetchLatest();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [schoolId]);
+    }, [schoolId, refreshTrigger]);
 
     const runPlan = async () => {
         const budgetNum = parseFloat(budget);

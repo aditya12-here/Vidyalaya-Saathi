@@ -27,6 +27,7 @@ import { PriorityDashboard } from './components/PriorityDashboard';
 import { BudgetPlanner } from './components/BudgetPlanner';
 import { SchoolExplorer } from './components/SchoolExplorer';
 import { ManualProblemForm } from './components/ManualProblemForm'; // >>> ADDED
+import { CostOverrideForm } from './components/CostOverrideForm'; // >>> ADDED
 import {
     FiFlag, FiTrendingUp, FiDollarSign, FiEye, FiHome,
     FiCheckCircle, FiCircle, FiArrowRight, FiRefreshCw,
@@ -63,6 +64,10 @@ function App() {
     const [loadError, setLoadError] = useState<string | null>(null);
     const [status, setStatus] = useState<SchoolStatus | null>(null);
     const [statusLoading, setStatusLoading] = useState(false);
+
+    const [budgetRefreshTrigger, setBudgetRefreshTrigger] = useState(0);
+
+    const [problemsRefreshTrigger, setProblemsRefreshTrigger] = useState(0);
 
     const fetchExistingSchools = async () => {
         setLoadingSchools(true);
@@ -246,7 +251,10 @@ function App() {
                             {/* >>> ADDED: manual problem flagging, no photo required */}
                             <ManualProblemForm
                                 schoolId={activeSchoolId}
-                                onProblemCreated={() => fetchSchoolStatus(activeSchoolId)}
+                                onProblemCreated={() => {
+                                    fetchSchoolStatus(activeSchoolId);
+                                    setProblemsRefreshTrigger(prev => prev + 1);
+                                }}
                             />
                         </section>
 
@@ -259,11 +267,20 @@ function App() {
                         </section>
 
                         <section id="step-budget" className="flow-section">
-                            <h3 className="flow-section-title">Step 3 · Plan the Budget</h3>
+                            <h3 className="flow-section-title">Step 3 A Plan the Budget</h3>
                             <p className="flow-section-desc">
                                 Enter a budget ceiling to see exactly which problems get funded, and why.
+                                You can also override the cost of specific problems before planning.
                             </p>
-                            <BudgetPlanner schoolId={activeSchoolId} />
+                            <CostOverrideForm 
+                                schoolId={activeSchoolId} 
+                                refreshTrigger={problemsRefreshTrigger}
+                                onCostOverridden={() => {
+                                    fetchSchoolStatus(activeSchoolId);
+                                    setBudgetRefreshTrigger(prev => prev + 1);
+                                }} 
+                            />
+                            <BudgetPlanner schoolId={activeSchoolId} refreshTrigger={budgetRefreshTrigger} />
                         </section>
 
                         <section id="step-explore" className="flow-section">
