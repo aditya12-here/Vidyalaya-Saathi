@@ -19,11 +19,13 @@ from app.api.school_data import router as school_data_router
 from app.api.prioritization import router as prioritization_router
 from app.api.budget import router as budget_router
 from app.api.explorer import router as explorer_router  # >>> ADDED
+from app.api.cbse_routes import router as cbse_router
 from app.database import engine
 from app.models.image import Base
 from app.models.school_data import Base as SchoolDataBase
 from app.models import prioritization as _prioritization_models  # noqa: F401
 from app.models import budget as _budget_models  # noqa: F401
+from app.models import cbse_affiliation as _cbse_affiliation_models # noqa: F401
 
 app = FastAPI(title="Vidyalaya Saathi - Diagnostic Engine API")
 
@@ -57,6 +59,7 @@ app.include_router(school_data_router, prefix="/api/v1")
 app.include_router(prioritization_router, prefix="/api/v1")
 app.include_router(budget_router, prefix="/api/v1")
 app.include_router(explorer_router, prefix="/api/v1")  # >>> ADDED
+app.include_router(cbse_router, prefix="/api/v1")
 
 @app.get("/")
 def read_root():

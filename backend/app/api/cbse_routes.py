@@ -1,11 +1,14 @@
 import math
-from fastapi import APIRouter, HTTPException, status
-from src.models.cbse_affiliation import CBSEAffiliationCreate
+from fastapi import APIRouter, HTTPException, status, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from app.models.cbse_affiliation import CBSEAffiliationCreate, CBSEAffiliationDBModel
+from app.database import get_db
 
 router = APIRouter()
 
 @router.post("/check", status_code=status.HTTP_200_OK)
-async def check_cbse_affiliation(data: CBSEAffiliationCreate):
+async def check_cbse_affiliation(data: CBSEAffiliationCreate, db: AsyncSession = Depends(get_db)):
     try:
         # Mandatory conditions that must be present in a school
         mandatory_conditions = []
@@ -41,6 +44,24 @@ async def check_cbse_affiliation(data: CBSEAffiliationCreate):
             recommendations.append("science lab is required")
 
         school_status = "NOT READY" if len(mandatory_conditions) > 0 else "READY"
+
+        db_item = CBSEAffiliationDBModel(
+            schoolName=data.schoolName,
+            stateNoc=data.stateNoc,
+            fireSafetyCert=data.fireSafetyCert,
+            healthCert=data.healthCert,
+            buildingSafetyCert=data.buildingSafetyCert,
+            totalStudent=data.totalStudent,
+            totalTeacher=data.totalTeacher,
+            hasLibrary=data.hasLibrary,
+            hasScienceLab=data.hasScienceLab,
+            hasMathLab=data.hasMathLab,
+            landArea=data.landArea,
+            hasSeperateWashroom=data.hasSeperateWashroom,
+            status=school_status
+        )
+        db.add(db_item)
+        await db.commit()
 
         return {
             "success": True,

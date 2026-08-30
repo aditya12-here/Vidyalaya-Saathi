@@ -28,6 +28,7 @@ import { BudgetPlanner } from './components/BudgetPlanner';
 import { SchoolExplorer } from './components/SchoolExplorer';
 import { ManualProblemForm } from './components/ManualProblemForm'; // >>> ADDED
 import { CostOverrideForm } from './components/CostOverrideForm'; // >>> ADDED
+import { CbseAffiliation } from './components/CbseAffiliation'; // >>> ADDED
 import {
     FiFlag, FiTrendingUp, FiDollarSign, FiEye, FiHome,
     FiCheckCircle, FiCircle, FiArrowRight, FiRefreshCw,
@@ -59,6 +60,7 @@ const HOW_IT_WORKS = [
 
 function App() {
     const [activeSchoolId, setActiveSchoolId] = useState<string | null>(null);
+    const [activeTab, setActiveTab] = useState<'main' | 'cbse'>('main'); // >>> ADDED
     const [existingSchools, setExistingSchools] = useState<ExistingSchool[]>([]);
     const [loadingSchools, setLoadingSchools] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -121,9 +123,27 @@ function App() {
             <header className="App-header">
                 <h1>Vidyalaya Saathi</h1>
                 <p>A diagnostic engine for government school infrastructure and outcomes.</p>
+                <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                    <button 
+                        style={{ padding: '0.5rem 1rem', background: activeTab === 'main' ? '#2563eb' : '#e2e8f0', color: activeTab === 'main' ? 'white' : '#0f172a', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
+                        onClick={() => setActiveTab('main')}
+                    >
+                        Dashboard
+                    </button>
+                    <button 
+                        style={{ padding: '0.5rem 1rem', background: activeTab === 'cbse' ? '#2563eb' : '#e2e8f0', color: activeTab === 'cbse' ? 'white' : '#0f172a', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
+                        onClick={() => setActiveTab('cbse')}
+                    >
+                        CBSE Affiliation
+                    </button>
+                </div>
             </header>
             <main className="App-main">
-                {!activeSchoolId ? (
+                {activeTab === 'cbse' ? (
+                    <div style={{ padding: '2rem' }}>
+                        <CbseAffiliation />
+                    </div>
+                ) : !activeSchoolId ? (
                     <div className="landing-container">
                         <section className="intro-panel">
                             <h2>What this portal does</h2>
