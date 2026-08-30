@@ -1,15 +1,96 @@
-/* --- ADDITIONS to frontend/src/App.css ---
-   Append everything below to the END of your existing App.css.
-   Do not replace the whole file — these are new rules only, for the
-   "load an existing school" landing panel added to App.tsx. Nothing above
-   this point needs to change. */
+/* frontend/src/App.css
+   FULL REPLACEMENT FILE — delete whatever is currently in this file and
+   paste this entire file in its place (do not append). Includes the
+   original base rules plus everything needed for the new landing intro,
+   "how it works" cards, and the guided dashboard flow strip/sections. */
+
+* {
+  box-sizing: border-box;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.App-header p {
+  margin: 4px 0 0 0;
+  color: #adb5bd;
+  font-size: 1.1rem;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+.App-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px 20px;
+}
+
+/* ---------- Landing page ---------- */
 
 .landing-container {
-  max-width: 640px;
-  margin: 40px auto;
+  max-width: 900px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+}
+
+.intro-panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.intro-panel h2 {
+  margin-top: 0;
+}
+
+.intro-text {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.how-it-works-card {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.hiw-icon {
+  color: #1565c0;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.how-it-works-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.9rem;
+}
+
+.how-it-works-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
 }
 
 .existing-schools-panel {
@@ -85,4 +166,175 @@
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.05em;
+}
+
+/* ---------- Dashboard (school active) ---------- */
+
+.dashboard-container {
+  padding-bottom: 20px;
+}
+
+.dashboard-notice {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.switch-school-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.switch-school-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Progress / flow strip */
+
+.flow-strip {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.flow-strip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #888;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flow-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: #555;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.flow-refresh-btn .spin {
+  animation: flow-spin 1s linear infinite;
+}
+
+@keyframes flow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flow-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #333;
+}
+
+.flow-step:hover {
+  background: #eef3fb;
+  border-color: #1565c0;
+}
+
+.flow-done {
+  color: #2e7d32;
+  flex-shrink: 0;
+}
+
+.flow-pending {
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.flow-neutral {
+  color: #1565c0;
+  flex-shrink: 0;
+}
+
+.flow-arrow {
+  color: #ccc;
+  flex-shrink: 0;
+}
+
+/* Numbered sections */
+
+.flow-section {
+  margin-bottom: 28px;
+  scroll-margin-top: 20px;
+}
+
+.flow-section-title {
+  margin: 0 0 4px 0;
+}
+
+.flow-section-desc {
+  margin: 0 0 14px 0;
+  color: #666;
+  font-size: 0.85rem;
+  max-width: 720px;
+}
+
+.flow-section-desc code {
+  background: #eee;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+
+.placeholder-modules {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.module-card {
+  flex: 1 1 220px;
+  background-color: #e9ecef;
+  border: 2px dashed #adb5bd;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  color: #6c757d;
+  font-weight: 500;
 }
