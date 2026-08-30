@@ -26,6 +26,7 @@ import { ModuleUpload } from './components/ModuleUpload';
 import { PriorityDashboard } from './components/PriorityDashboard';
 import { BudgetPlanner } from './components/BudgetPlanner';
 import { SchoolExplorer } from './components/SchoolExplorer';
+import { ManualProblemForm } from './components/ManualProblemForm'; // >>> ADDED
 import {
     FiFlag, FiTrendingUp, FiDollarSign, FiEye, FiHome,
     FiCheckCircle, FiCircle, FiArrowRight, FiRefreshCw,
@@ -222,11 +223,8 @@ function App() {
                         <section id="step-data" className="flow-section">
                             <h3 className="flow-section-title">Step 1 · Log Data &amp; Flag Problems</h3>
                             <p className="flow-section-desc">
-                                Record attendance/learning/teacher/infrastructure data, and flag problems via
-                                photo upload (AI-analyzed) here. A dedicated manual "flag a problem without a
-                                photo" form is not built yet — for now, use the API docs at{' '}
-                                <code>localhost:8000/docs</code> (<code>problems</code> → <code>manual</code>)
-                                to add one directly.
+                                Record attendance/learning/teacher/infrastructure data, and flag problems —
+                                either via photo upload (AI-analyzed) or manually below.
                             </p>
                             <div className="placeholder-modules">
                                 <div className="module-card">
@@ -245,6 +243,11 @@ function App() {
                                     <ModuleUpload activeSchoolId={activeSchoolId} moduleName="Infrastructure" />
                                 </div>
                             </div>
+                            {/* >>> ADDED: manual problem flagging, no photo required */}
+                            <ManualProblemForm
+                                schoolId={activeSchoolId}
+                                onProblemCreated={() => fetchSchoolStatus(activeSchoolId)}
+                            />
                         </section>
 
                         <section id="step-prioritize" className="flow-section">
