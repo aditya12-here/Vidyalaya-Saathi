@@ -1,0 +1,27 @@
+{
+  "name": "vidyalaya-saathi",
+  "version": "1.0.0",
+  "description": "Government schools have infrastructure problems. Our product is a diagnostic engine. It will solve problems of teachers, students and administrators - it will categorize the most vulnerable areas that needs to be improved in school from perspective of student and teacher. Those areas can vary from infrastructure or literacy to student's improvement in FLN skills or teacher's shortage. It will also give administrator to analyze the findings and rank which aspect of school can be improved given the budget. Our engine will suggest solutions of how listed problems can be improved. I will use latent code to help me automate data collection, analysis, diagnosis, prioritization, and generate actionable recommendations for each school to build our product - Vidyalaya Saathi.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aditya12-here/Vidyalaya-Saathi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/aditya12-here/Vidyalaya-Saathi/issues"
+  },
+  "homepage": "https://github.com/aditya12-here/Vidyalaya-Saathi#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4"
+  }
+}
